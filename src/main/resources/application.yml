@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: tp-kinesis-stream
+          content-type: text/plain
+
+cloud:
+  aws:
+    credentials:
+      accessKey: <REPLACE_HERE>
+      secretKey: <REPLACE_HERE>
+    region:
+      static: us-east-1
+    stack:
+      auto: false

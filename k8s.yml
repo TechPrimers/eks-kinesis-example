@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eks-kinesis-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eks-kinesis-example
+  template:
+    metadata:
+      labels:
+        app: eks-kinesis-example
+    spec:
+      containers:
+        - name: eks-kinesis-example
+          image: 'docker.pkg.github.com/techprimers/container-images/eks-kinesis-example:v1'
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: registry-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eks-kinesis-example
+  labels:
+    name: eks-kinesis-example
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: eks-kinesis-example
+  type: LoadBalancer
